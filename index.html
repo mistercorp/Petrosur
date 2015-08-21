@@ -209,7 +209,7 @@
 						
                                                 
 						<p style="text-align:center;">                                                    
-                                                    <fb:login-button id="fb-button" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+                                                    <fb:login-button id="fb-button" scope="public_profile,email,publish_actions" onlogin="checkLoginState();"></fb:login-button>
 						</p>
 						<p>Nro. de Cedula<br>
 							<input name="cedula" id="cedula" type="number">
@@ -253,6 +253,7 @@
 			Compartí esta noticia en tu perfil!
 			<br><br>
 			<a href="#" onclick="shareThis();" class="button">Compartir</a>
+                        <div onclick="shareThis();"  id="share_button" class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button"></div>
 			<a href="#" onclick="$('#popup').hide();" class="button">No Compartir</a>
 		</div>
 	</div>
@@ -307,8 +308,9 @@
     }
     
 
-    function popup(id){
+    function popup(id,url){
       newsId = id;
+      $(".fb-share-button").attr('data-href',url);
       $('#popup').show();
     }
     
@@ -326,12 +328,13 @@
     
 
     function noticia(position,data){
-
-      var html = '<div onclick="popup('+data.id+');"><img src="'+IMG_URL+data.image+'"><div class="newstitle"><div class="pad10"> '+data.title+'</div></div></div>';
+      var url = "'"+data.url+"'";
+      var html = '<div onclick="popup('+data.id+','+url+');"><img src="'+IMG_URL+data.image+'"><div class="newstitle"><div class="pad10"> '+data.title+'</div></div></div>';
       document.getElementById('news_'+position).innerHTML = html;
     }
 
     function shareThis(){
+        
         $('#popup').hide();
         for(var i=0;i<myList.data.length;i++){
             

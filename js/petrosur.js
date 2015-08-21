@@ -1,5 +1,5 @@
-var API_URL = 'http://localhost/petrosur/public/api/';
-var IMG_URL = 'http://localhost/petrosur/public/web/mobile_images/';
+var API_URL = 'http://dev.ullon.com/petrosur/public/api/';
+var IMG_URL = 'http://dev.ullon.com/petrosur/public/web/mobile_images/';
 var STATUS_DEFAULT_HTML = '<h2>Ingresá con Facebook para usar la aplicación y participar</h2>';
 
 var fb_id = 0;
