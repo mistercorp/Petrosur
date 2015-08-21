@@ -1,0 +1,373 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<!-- Mirrored from www.mister.com.py/petrosur/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Jul 2015 01:04:21 GMT -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Petrosur</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+	<link rel="stylesheet" href="petrosur.css" />
+    <script src="js/vendor/modernizr.js"></script>
+
+	   <script src="js/vendor/jquery.js"></script>
+     <script src="js/petrosur.js"></script>
+    <script src="js/foundation.min.js"></script>
+
+  </head>
+  <body>
+<script>
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = STATUS_DEFAULT_HTML;
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = STATUS_DEFAULT_HTML;
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '427071560813161',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.2' // use version 2.2
+  });
+
+  // Now that we've initialized the JavaScript SDK, we call 
+  // FB.getLoginStatus().  This function gets the state of the
+  // person visiting this page and can return one of three states to
+  // the callback you provide.  They can be:
+  //
+  // 1. Logged into your app ('connected')
+  // 2. Logged into Facebook, but not your app ('not_authorized')
+  // 3. Not logged into Facebook and can't tell if they are logged into
+  //    your app or not.
+  //
+  // These three cases are handled in the callback function.
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me?fields=first_name,last_name,email,id', function(response) {
+      document.getElementById('status').innerHTML = '<h2>Bienvenido '+response.first_name+' '+response.last_name+'</h2>';
+      document.getElementById('fb-button').innerHTML = 'Por favor llene el formulario';
+      fb_response = response;
+      fb_id = response.id;
+      
+    });
+  }
+</script>
+
+<div class="off-canvas-wrap" data-offcanvas>
+  <div class="inner-wrap">
+
+
+
+    <!-- Off Canvas Menu -->
+    <aside id="themenu" class="left-off-canvas-menu fixed">
+        <!-- whatever you want goes here -->
+        <ul>
+                  <li><a href="#" onclick="list_all();">Todas las noticias</a></li>
+		  <li><a href="#" onclick="list_mine();">Mis Noticias Favoritas</a></li>		  
+		  <li><a href="#" onclick="my_coupons();">Mis Cupones</a></li>
+        </ul>
+    </aside>
+
+<div id="theapp">
+	<div id="header">
+		<div class="row">
+			<div class="large-12">
+
+				<div class="left">
+					<a class="left-off-canvas-toggle" href="#" ><img src="img/burger.png"></a>
+
+				</div>
+
+				<div class="left">
+					<img src="img/logo.png" width="100%">
+				</div>
+
+			</div>
+        </div>
+	</div>
+
+	<div id="appcontent">
+		<div class="row">
+
+			<div class="large-6 columns">
+
+				<div class="newsitem" id='news_0'>
+
+
+
+				</div>
+
+			</div>
+
+			<div class="large-6 columns">
+
+				<div class="newsitem" id='news_1'>
+
+
+
+			</div>
+
+		</div>
+		<div class="row">
+
+			<div class="large-6 columns">
+
+				<div class="newsitem" id='news_2'>
+
+				</div>
+
+			</div>
+
+			<div class="large-6 columns">
+
+				<div class="newsitem" id='news_3'>
+
+
+				</div>
+
+			</div>
+
+		</div>
+		<div class="row">
+
+			<div class="large-6 columns">
+
+				<div class="newsitem" id='news_4'>
+
+
+
+				</div>
+
+			</div>
+
+			<div class="large-6 columns">
+
+				<div class="newsitem" id='news_5'>
+
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<!--- REGISTRO -->
+
+
+		<div id="registro">
+				<div class="row">
+					<div class="large-12 columns">
+                                            <div id="status">
+                                                <h2>Ingresá con Facebook para usar la aplicación y participar</h2>
+                                            </div>
+						
+                                                
+						<p style="text-align:center;">                                                    
+                                                    <fb:login-button id="fb-button" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+						</p>
+						<p>Nro. de Cedula<br>
+							<input name="cedula" id="cedula" type="number">
+						</p>
+						<p>Telefono<br>
+							<input name="telefono" id="telefono" type="number">
+						</p>
+
+						<p>
+                                                    <a href="#" onclick="pre_register();" class="button">Registrarme</a>
+						</p>
+
+					</div>
+				</div>
+		</div>
+
+		<!--- REGISTRO -->
+
+
+	</div>
+
+
+
+
+
+
+
+	<div id="tuestacion"></div>
+	<div id="tanque">
+
+		<div id="aguja">
+
+		<img id="needle" src="img/aguja4.png">
+
+		</div>
+
+	</div>
+
+	<div id="popup">
+		<div class="message">
+			Compartí esta noticia en tu perfil!
+			<br><br>
+			<a href="#" onclick="shareThis();" class="button">Compartir</a>
+			<a href="#" onclick="$('#popup').hide();" class="button">No Compartir</a>
+		</div>
+	</div>
+
+</div>
+
+  <!-- close the off-canvas menu -->
+  <a class="exit-off-canvas"></a>
+
+  </div>
+  </div>
+</div>
+
+
+
+
+
+    <script>
+    var newsId;
+    var uId = 0;
+    var myList;
+
+    $(document).foundation();
+
+	  $(document).ready(function () {
+                
+                list_all();
+                
+	  });
+          
+        
+    function list_all(){
+        var d = [
+                    {
+                        "key"   :"uid",
+                        "value" :uId
+                    }
+                ]
+                api_call('news','get_list','','list_news');
+                api_call('news','get_my_list',JSON.stringify(d),'my_list');
+    }
+    
+    function list_mine(){
+        var d = [
+                    {
+                        "key"   :"uid",
+                        "value" :uId
+                    }
+                ]
+                api_call('news','get_my_list',JSON.stringify(d),'list_news');
+                api_call('news','get_my_list',JSON.stringify(d),'my_list');
+    }
+    
+
+    function popup(id){
+      newsId = id;
+      $('#popup').show();
+    }
+    
+    function list_news(data){
+      clear_list();
+      for(var i=0;i<data.data.length;i++) noticia(i,data.data[i]);
+    }
+    function my_list(data){
+      myList = data;
+    }
+    
+    function clear_list(){
+       for(var i=0;i<6;i++) document.getElementById('news_'+i).innerHTML = '';
+    }
+    
+
+    function noticia(position,data){
+
+      var html = '<div onclick="popup('+data.id+');"><img src="'+IMG_URL+data.image+'"><div class="newstitle"><div class="pad10"> '+data.title+'</div></div></div>';
+      document.getElementById('news_'+position).innerHTML = html;
+    }
+
+    function shareThis(){
+        $('#popup').hide();
+        for(var i=0;i<myList.data.length;i++){
+            
+            if(myList.data[i].id==newsId){
+                alert('Esta noticia ya fue compartida');
+                return false;
+            }
+        }
+        
+        
+        var data = [
+            {
+                "key"   :"nid",
+                "value" :newsId
+            },
+            {
+                "key"   :"uid",
+                "value" :uId
+            }
+        ];        
+        
+        api_call('news','share_new',JSON.stringify(data),'share_return');
+        api_call('news','get_my_list',JSON.stringify(data),'my_list');
+        
+    }
+    
+    
+    
+    function share_return(data){
+        alert(data.status);
+    }
+
+    </script>
+
+
+  </body>
+
+<!-- Mirrored from www.mister.com.py/petrosur/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Jul 2015 01:04:29 GMT -->
+</html>

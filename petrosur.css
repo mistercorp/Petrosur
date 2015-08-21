@@ -1,0 +1,161 @@
+@import url('font/FunctionCondTwoMedium-Regular.css');
+
+h1, h2, h3, h4 {
+	font-family:'FunctionCondTwoMedium-Regular';
+	color:#2A3290;
+}
+
+.left-off-canvas-menu {
+	background-color:#2A3290;
+}
+
+.left-off-canvas-menu ul{
+	padding:20px;
+}
+
+.left-off-canvas-menu ul li{
+	padding:0px;
+	margin:0px;
+	list-style-type:none;
+}
+
+.left-off-canvas-menu ul li a{
+	color:#fff;
+}
+
+.newsitem {
+	position:relative;
+	margin-bottom:10px;
+}
+
+.newstitle {
+	position:absolute;
+	bottom:0px;
+	width:100%;
+	background-image:url(img/shadow_blue.png);
+	color:#fff;
+	font-family:'FunctionCondTwoMedium-Regular';
+	font-size:16px;
+	text-transform:uppercase;
+}
+.pad10 {
+	padding:10px;
+}
+
+.button {
+	text-transform:uppercase;
+	color:#fff;
+	font-family:'FunctionCondTwoMedium-Regular';
+	border-radius:6px;
+	font-size:24px;
+	background-color:#68bd45;
+}
+
+.row {
+	max-width:100%;
+}
+
+#themenu {
+	font-family:'FunctionCondTwoMedium-Regular';
+}
+
+#themenu li{
+	text-transform:uppercase;
+	font-size:20px;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+
+#header {
+	border-bottom:2px solid #2A3290;
+	background-color:#fff;
+	padding-bottom:5px;
+	position:fixed;
+	z-index:999;
+	width:100%;
+}
+
+#appcontent {
+	padding-top:74px;
+	padding-bottom:74px;
+}
+
+#registro {
+	text-align:center;
+}
+
+#registro h2 {
+	text-align:center;
+	font-size:24px;
+	text-transform:uppercase;
+	line-height:30px;
+}
+#registro p{
+	color:#2A3290;
+	font-size:14px;
+	text-transform:uppercase;
+}
+#theapp {
+	position:relative;
+}
+
+#tuestacion {
+	background-image:url(img/tuestacion.png);
+	display:block;
+	width:90px;
+	height:90px;
+	position:fixed;
+	bottom:0px;
+	left:0px;
+	z-index:9999;
+}
+
+#tanque {
+	background-image:url(img/tanque.png);
+	display:block;
+	width:190px;
+	height:90px;
+	position:fixed;
+	bottom:0px;
+	right:0px;
+	z-index:9999;
+}
+
+#aguja {
+	display:block;
+	width:84px;
+	height:51px;
+	position:absolute;
+	bottom:5px;
+	right:17px;
+}
+
+#popup {
+	border-radius:20px;
+	top:2%;
+	left:3%;
+	width:95%;
+	background-color:#2A3290;
+	position:fixed;
+	z-index:9999;
+	border:1px solid #68bd45;
+	display:none;
+}
+#popup .message {
+	text-align:center;
+	text-transform:uppercase;
+	padding:30px;
+	color:#fff;
+	font-family:'FunctionCondTwoMedium-Regular';
+	font-size:36px;
+	line-height:38px;
+}
+
+#popup .button {
+	text-transform:uppercase;
+	color:#fff;
+	font-family:'FunctionCondTwoMedium-Regular';
+	border-radius:6px;
+	font-size:24px;
+	background-color:#68bd45;
+}
