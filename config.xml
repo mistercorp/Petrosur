@@ -23,8 +23,18 @@
 	<preference name="fullscreen" value="true" />
 	
 	
-	<feature name="http://api.phonegap.com/1.0/network"/>
+	
 
-	<access origin="*" />
+	
+        
+        <gap:plugin name="com.phonegap.plugins.facebookconnect"> 
+        <param name="APP_ID" value="427071560813161" /> 
+        <param name="APP_NAME" value="Llenos de Buena Energia" /> 
+        </gap:plugin> 
+        
+         <feature name="http://api.phonegap.com/1.0/geolocation"/>
+         <feature name="http://api.phonegap.com/1.0/network"/>
+         <access origin="*" />
+        
 
 </widget>
