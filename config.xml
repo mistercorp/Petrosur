@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap       = "http://phonegap.com/ns/1.0"
+    	xmlns:android   = "http://schemas.android.com/apk/res/android"
+        id          = "com.mistercompy.petrosur"
+        versionCode = "2" 
+        version     = "1.2.0" >
+
+    <!-- versionCode is optional and Android only -->
+	<preference name="phonegap-version" value="3.7.0" />
+	<preference name="splash-screen-duration" value="2000" />
+	<preference name="orientation" value="portrait" />
+    <name>Llenos de Buena Energia</name>
+
+    <description>
+        En Petrosur estamos llenos de buena energía.
+    </description>
+
+    <author href="http://www.petrosur.com.py" email="keuch2@gmail.com">
+        Petrosur
+    </author>
+	
+	
+	
+	
+	<feature name="http://api.phonegap.com/1.0/network"/>
+
+	<access origin="*" />
+
+</widget>
