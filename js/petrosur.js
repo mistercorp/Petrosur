@@ -20,26 +20,27 @@ function api_call(c,m,json,callback){
 }
 
 function pre_register(){
-    if(fb_id!=0){
+    
         var document_number = document.getElementById('cedula').value;
         var phone_number = document.getElementById('telefono').value;
         if(document_number.length<5){
             alert('Por favor ingrese su numero de documento');
+            document.getElementById('cedula').focus()
             return false;
         }
         if(phone_number.length<5){
             alert('Por favor ingrese su numero de telefono');
+            document.getElementById('telefono').focus();
             return false;
         }
-        register(fb_response.first_name,fb_response.last_name,fb_response.email,document_number,phone_number,fb_id,'','','');
-    }else{
-        alert('Debe ingresar con su cuenta de facebook para registrarse');
-    }
+        
+        login();
+    
 }
 
 
 function register(first_name,last_name,email,document_number,phone_number,fb_id,fb_token,tw_id,tw_token){
-    var json = [
+    var data = [
             {
                 "key"   :"first_name",
                 "value" :first_name
@@ -79,19 +80,45 @@ function register(first_name,last_name,email,document_number,phone_number,fb_id,
         ];
     
     
-    api_call('user','register',JSON.stringify(json),'register_return');
+    api_call('user','register',JSON.stringify(data),'register_return');
     
 }
 
 function register_return(data){
     if(data.status=="success"){
-        alert('success!');
+        uId=data.data.id;
+        
+        var d = [
+                    {
+                        "key"   :"uid",
+                        "value" :uId
+                    }
+                ]
+        api_call('news','get_my_list',JSON.stringify(d),'my_list');
+        
+        alert('Bienvenido '.fb_response.first_name+' '+fb_response.last_name);
+        document.getElementById('registro').innerHTML ='';
     }else{
-        alert(data.data.message);
+        alert(data.message);
     }
 }
 
+function set_var(varName,varValue){
+    if(typeof(Storage) !== "undefined") {
+        localStorage.setItem(varName, varValue);
+        
+    } else {
+        
+    }
+}
 
+function get_var(varName){
+    if(typeof(Storage) !== "undefined") {
+        localStorage.getItem(varName);
+    } else {
+        alert("LocalStorage is Off");
+    }
+}
 
 
 

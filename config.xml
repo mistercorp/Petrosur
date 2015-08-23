@@ -28,8 +28,9 @@
 	
         
         <gap:plugin name="com.phonegap.plugins.facebookconnect"> 
-        <param name="APP_ID" value="427071560813161" /> 
-        <param name="APP_NAME" value="Llenos de Buena Energia" /> 
+        <param name="APP_ID" value="145649255773745" /> 
+        <param name="APP_NAME" value="Petrosur: Buena energia" /> 
+        <param name="APP_SECRET" value="386b13d2d2387a1ac123e006cb46ddc1" /> 
         </gap:plugin> 
         
          <feature name="http://api.phonegap.com/1.0/geolocation"/>

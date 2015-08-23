@@ -18,33 +18,6 @@
   </head>
   <body>
 
-<script>
-   
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    facebookConnectPlugin.api('/me?fields=first_name,last_name,email,id', function(response) {
-      document.getElementById('status').innerHTML = '<h2>Bienvenido '+response.first_name+' '+response.last_name+'</h2>';
-      document.getElementById('fb-button').innerHTML = 'Por favor llene el formulario';
-      fb_response = response;
-      fb_id = response.id;
-      
-    });
-  }
-
-    function facebookWallPost(postName,postLink,postPicture,postCaption,postDescription) {
-        console.log('Debug 1');
-        var params = {
-            method: 'feed',
-            name: 'Facebook Dialogs',
-            link: 'https://developers.facebook.com/docs/reference/dialogs/',
-            picture: 'http://fbrell.com/f8.jpg',
-            caption: 'Reference Documentation',
-            description: 'Dialogs description'
-        };
-        console.log(params);
-        facebookConnectPlugin.ui(params, function(obj) { console.log(obj);});
-    }  
-</script>
 
 <div class="off-canvas-wrap" data-offcanvas>
   <div class="inner-wrap">
@@ -153,15 +126,16 @@
 				<div class="row">
 					<div class="large-12 columns">
                                             <div id="status">
+                                                <!--
                                                 <h2>Ingresá con Facebook para usar la aplicación y participar</h2>
+                                                <p style="text-align:center;">                                                    
+                                                    <a href="#" onclick="login()"><img src="img/facebook.png"></a>
+						</p>
+                                                -->
                                             </div>
 						
                                                 
-						<p style="text-align:center;">                                                    
-                                                    
-                                                    <a href="#" onclick="login()"><img src="img/facebook.png"></a>
-                                                    
-						</p>
+						
 						<p>Nro. de Cedula<br>
 							<input name="cedula" id="cedula" type="number">
 						</p>
@@ -205,7 +179,7 @@
 			<br><br>
 			<a href="#" onclick="shareThis();" class="button">Compartir</a>
                         
-                        <div onclick="shareThis();"  id="share_button" class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button"></div>
+                        
 			<a href="#" onclick="$('#popup').hide();" class="button">No Compartir</a>
 		</div>
 	</div>
@@ -226,13 +200,17 @@
     <script>
     var newsId;
     var uId = 0;
+    var newsList;
     var myList;
 
     $(document).foundation();
 
 	  $(document).ready(function () {
                 
-                list_all();
+                list_all();                
+                uId = get_var('uId');
+                fb_id = get_var('fb_id');
+                fb_response = get_var('fb_response');
                 
 	  });
           
@@ -246,9 +224,14 @@
                 ]
                 api_call('news','get_list','','list_news');
                 api_call('news','get_my_list',JSON.stringify(d),'my_list');
+                
     }
     
     function list_mine(){
+        if(uId==0){
+            alert('Debe ser un usuario registrado para usar esta funcion');
+            return false;
+        }
         var d = [
                     {
                         "key"   :"uid",
@@ -260,14 +243,19 @@
     }
     
 
-    function popup(id,url){
-      newsId = id;
-      $(".share_button").attr('data-href',url);
+    function popup(id){
+        if(uId==0){
+            alert('Debe ser un usuario registrado para poder compartir noticias');
+            return false;
+        }      
+        newsId = id;
+      
       $('#popup').show();
     }
     
     function list_news(data){
       clear_list();
+      newsList = data;
       for(var i=0;i<data.data.length;i++) noticia(i,data.data[i]);
     }
     function my_list(data){
@@ -281,13 +269,17 @@
 
     function noticia(position,data){
       var url = "'"+data.url+"'";
-      var html = '<div onclick="popup('+data.id+','+url+');"><img src="'+IMG_URL+data.image+'"><div class="newstitle"><div class="pad10"> '+data.title+'</div></div></div>';
+      var html = '<div onclick="popup('+data.id+');"><img src="'+IMG_URL+data.image+'"><div class="newstitle"><div class="pad10"> '+data.title+'</div></div></div>';
       document.getElementById('news_'+position).innerHTML = html;
     }
 
     function shareThis(){
         
         $('#popup').hide();
+        if(uId==0){
+            alert('Debe ser un usuario registrado para poder compartir noticias');
+            return false;
+        }
         for(var i=0;i<myList.data.length;i++){
             
             if(myList.data[i].id==newsId){
@@ -296,6 +288,23 @@
             }
         }
         
+        for(var i=0;i<newsList.data.length;i++){
+            if(newsList.data[i].id==newsId){
+                
+                facebookWallPost(
+                        newsList.data[i].title,
+                        newsList.data[i].url,
+                        IMG_URL+newsList.data[i].image,
+                        'Petrosur, Buena Energia',
+                        'Comparte buenas noticias con Petrosur!'
+                );
+                
+                        
+            }
+        }
+    }
+    
+    function saveShared(fbPostId){
         
         var data = [
             {
@@ -305,18 +314,50 @@
             {
                 "key"   :"uid",
                 "value" :uId
+            },
+            {
+                "key"   :"fb_post_id",
+                "value" :fbPostId
             }
         ];        
         
         api_call('news','share_new',JSON.stringify(data),'share_return');
         api_call('news','get_my_list',JSON.stringify(data),'my_list');
-        
+        api_call('user','getfuel',JSON.stringify(data),'update_fuel');
+        var n = {"id":newsId};
+        myList.data.push(n);
     }
     
-    
+    function update_fuel(data){
+        document.getElementById('needle').src='img/aguja'+data.data.level+'.png';
+    }
+        
     
     function share_return(data){
-        alert(data.status);
+        if(data.status=='success'){
+            alert('Su noticia se ha compartido con exito!');
+        }else{
+            alert('Ocurrio un error al registrar este share');
+        }
+    }
+    
+    function verifyFbUser(fbid){
+        var data = [
+            {
+                "key"   :"fbid",
+                "value" :fbid
+            }
+        ]; 
+        api_call('user','verify_fbuser',JSON.stringify(data),'verifyFbUser_return');
+    }
+    
+    function verifyFbUser_return(data){
+        if(data.status=='success'){
+            uId = data.data[0].id;
+            document.getElementById('registro').style='visibility:hidden';
+        }else{
+            alert(data.message);
+        }
     }
 
     </script>
@@ -328,13 +369,28 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript">
             var login = function () {
-                if (window.cordova.platformId == "browser") {
-                    var appId = prompt("Enter FB Application ID", "");
+                if (window.cordova.platformId == "web") {
+                    var appId = "145649255773745";
                     facebookConnectPlugin.browserInit(appId);
                 }
-                facebookConnectPlugin.login( ["email"], 
-                    function (response) { alert(JSON.stringify(response)) },
-                    function (response) { alert(JSON.stringify(response)) });
+                facebookConnectPlugin.login( ["email","public_profile "], 
+                    function (response) {
+                        fb_id = response.authResponse.userID;
+                        
+                        getUser();
+                        //facebookConnectPlugin.api('/me', function(meresponse) {
+                        //    alert(JSON.stringify(meresponse));
+                        //    verifyFbUser(meresponse.id);
+                        //    fb_id = meresponse.id;
+                        //    fb_response = meresponse;
+                            //document.getElementById('status').innerHTML = '<h2>Bienvenido '+response.first_name+' '+response.last_name+'</h2>';
+                        //    document.getElementById('status').innerHTML = JSON.stringify(meresponse);
+                            //alert(JSON.stringify(response));
+                        //});
+                        
+                    },
+                    function (response) { alert(JSON.stringify(response)) }
+                 );
             }
             
             var showDialog = function () { 
@@ -343,11 +399,54 @@
                     function (response) { alert(JSON.stringify(response)) });
             }
             
-            var apiTest = function () { 
-                facebookConnectPlugin.api( "me/?fields=id,email", ["user_birthday"],
-                    function (response) { alert(JSON.stringify(response)) },
-                    function (response) { alert(JSON.stringify(response)) }); 
+            var getUser = function () { 
+                facebookConnectPlugin.api( "me/?fields=first_name,last_name,email,id", ['publish_actions'],
+                    function (response) { 
+                        document.getElementById('status').innerHTML = '<h2>Bienvenido '+response.first_name+' '+response.last_name+'</h2>';
+                        fb_id = response.id;
+                        fb_response = response;
+                        set_var('fb_id',fb_id);
+                        //set_var('fb_response',fb_response);
+                        
+                        var document_number = document.getElementById('cedula').value;
+                        var phone_number = document.getElementById('telefono').value;
+                        if(document_number.length<5){
+                            alert('Por favor ingrese su numero de documento');
+                            document.getElementById('cedula').focus()
+                            return false;
+                        }
+                        if(phone_number.length<5){
+                            alert('Por favor ingrese su numero de telefono');
+                            document.getElementById('telefono').focus();
+                            return false;
+                        }
+                        
+                        register(fb_response.first_name,fb_response.last_name,fb_response.email,document_number,phone_number,fb_id,'-','-','-');
+
+                    },
+                    function (response) { alert('Getuser Failed: '+JSON.stringify(response)) }); 
             }
+            
+            function facebookWallPost(postName,postLink,postPicture,postCaption,postDescription) {
+                
+                var params = {
+                    method: 'feed',
+                    name: postName,
+                    link: postLink,
+                    picture: postPicture,
+                    caption: postCaption,
+                    description: postDescription
+                };
+                facebookConnectPlugin.showDialog( params, 
+                    function (response) { 
+                        //alert(JSON.stringify(response)) 
+                        saveShared(response.post_id);
+                    },
+                    function (response) { alert(JSON.stringify(response)) });
+                
+                console.log(params);
+                
+            } 
 
             var getAccessToken = function () { 
                 facebookConnectPlugin.getAccessToken( 
