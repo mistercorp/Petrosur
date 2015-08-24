@@ -31,6 +31,7 @@
                   <li><a href="#" onclick="list_all();">Todas las noticias</a></li>
 		  <li><a href="#" onclick="list_mine();">Mis Noticias Favoritas</a></li>		  
 		  <li><a href="#" onclick="my_coupons();">Mis Cupones</a></li>
+		  <li><a href="#" onclick="ver_mapa();">Ver Estaciones</a></li>
         </ul>
     </aside>
 
@@ -53,71 +54,76 @@
 	</div>
 
 	<div id="appcontent">
-		<div class="row">
+	
+		<div id="noticias">
+	
+			<div class="row">
 
-			<div class="large-6 columns">
+				<div class="large-6 columns">
 
-				<div class="newsitem" id='news_0'>
+					<div class="newsitem" id='news_0'>
+
+
+
+					</div>
+
+				</div>
+
+				<div class="large-6 columns">
+
+					<div class="newsitem" id='news_1'>
 
 
 
 				</div>
+				</div>
 
 			</div>
+			<div class="row">
 
-			<div class="large-6 columns">
+				<div class="large-6 columns">
 
-				<div class="newsitem" id='news_1'>
+					<div class="newsitem" id='news_2'>
+
+					</div>
+
+				</div>
+
+				<div class="large-6 columns">
+
+					<div class="newsitem" id='news_3'>
 
 
+					</div>
+
+				</div>
 
 			</div>
+			<div class="row">
 
+				<div class="large-6 columns">
+
+					<div class="newsitem" id='news_4'>
+
+
+
+					</div>
+
+				</div>
+
+				<div class="large-6 columns">
+
+					<div class="newsitem" id='news_5'>
+
+
+
+					</div>
+
+				</div>
+
+			</div>
+		
 		</div>
-		<div class="row">
-
-			<div class="large-6 columns">
-
-				<div class="newsitem" id='news_2'>
-
-				</div>
-
-			</div>
-
-			<div class="large-6 columns">
-
-				<div class="newsitem" id='news_3'>
-
-
-				</div>
-
-			</div>
-
-		</div>
-		<div class="row">
-
-			<div class="large-6 columns">
-
-				<div class="newsitem" id='news_4'>
-
-
-
-				</div>
-
-			</div>
-
-			<div class="large-6 columns">
-
-				<div class="newsitem" id='news_5'>
-
-
-
-				</div>
-
-			</div>
-
-		</div>
-
 
 		<!--- REGISTRO -->
 
@@ -152,6 +158,14 @@
 		</div>
 
 		<!--- REGISTRO -->
+		
+		<div id="mapa">
+		
+		
+		</div>
+		<div id="cerrarmapa" onclick="cerrar_mapa()">
+			CERRAR
+		</div>
 
 
 	</div>
@@ -359,6 +373,15 @@
             alert(data.message);
         }
     }
+	
+	function ver_mapa() {
+		$('#mapa').show();
+		$('#cerrarmapa').show();
+	  }
+	  function cerrar_mapa() {
+		$('#mapa').hide();
+		$('#cerrarmapa').hide();
+	  }
 
     </script>
     
